@@ -1,4 +1,6 @@
-from resources.factors import get_factors
+import math
+
+from resources.primes import get_primes_upto
 
 question = '''
 2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
@@ -10,27 +12,17 @@ target = 20
 
 
 def solution():
-    primes = []
-    for i in range(2, target):
-        temp = primes
-        factors = get_factors(i)
-        for i in factors:
-            if i in temp:
-                temp.remove(i)
-        primes.extend(factors)
-        print(i, factors)
-    product = 1
-    for i in primes:
-        product *= i
-    print(product)
-    # lcm = 1
-    # for i in range(2, target):
-    #     if i > lcm:
-    #         greater = i
-    #     else:
-    #         greater = lcm
-    #     while True:
-    #         if greater % i == 0 and greater % lcm == 0:
-    #             lcm = greater
-    #             break
-    #         greater += 1
+    primes = get_primes_upto(target)
+
+    lcm = 1
+    sqrt = target ** 0.5
+    less_than_sqrt = True
+    for prime in primes:
+        power = 1
+        if less_than_sqrt:
+            if prime <= sqrt:
+                power = math.floor(math.log(target) / math.log(prime))
+            else:
+                less_than_sqrt = False
+        lcm *= prime ** power
+    print(lcm)

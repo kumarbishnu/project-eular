@@ -11,4 +11,3 @@ target = 906609
 
 def solution():
     print(get_factors(600851475143)[-1])
-

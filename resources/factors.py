@@ -51,3 +51,24 @@ def get_factors(num: int):
     if root * root == num:
         factors.remove(root)
     return sorted(factors)
+
+
+def sum_proper_divisors(num: int):
+    p = 2
+    _sum = 1
+    while p * p <= num and num > 1:
+        if num % p == 0:
+            j = p * p
+            num = num // p
+            while num % p == 0:
+                j = j * p
+                num = num // p
+            _sum = _sum * (j - 1)
+            _sum = _sum // (p - 1)
+        if p == 2:
+            p = 3
+        else:
+            p += 2
+    if num > 1:
+        _sum = _sum * (num + 1)
+    return _sum - num
